@@ -1,0 +1,12 @@
+{
+    "name": "deleteuseranddata",
+    "version": "1.0.0",
+    "description": "used for remove user data and account from mypi",
+    "main": "PurgeUser.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "private": true
+}
