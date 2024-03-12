@@ -25,7 +25,7 @@ async function sendPushNotification(expoPushTokens, notifTitle, notifBody) {
     }
 
     // Send the notifications
-    let chunks = expo.chunkPushNotifications([messages]);
+    let chunks = expo.chunkPushNotifications(messages);
     let tickets = [];
     (async () => {
         for (let chunk of chunks) {
