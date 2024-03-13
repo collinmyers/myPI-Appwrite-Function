@@ -41,19 +41,18 @@ async function sendPushNotification(expoPushTokens, notifTitle, notifBody) {
 }
 
 // Main function entry point
-async function main(request, response) {
+export default async function main({ req, res }) {
 
 
-    const { expoPushTokens, title, body } = request.body;
+    const expoPushTokens = req.headers.expoPushTokens;
+    const title = req.headers.title;
+    const body = req.headers.body;
 
     try {
         const result = await sendPushNotification(expoPushTokens, title, body);
-        response.send({ success: true });
+        res.send({ success: true });
     } catch (error) {
         console.error('Error sending push notification:', error);
-        response.send({ success: false });
+        res.send({ success: false });
     }
 }
-
-// Export the main function
-export default { main };
