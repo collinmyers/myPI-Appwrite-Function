@@ -1,4 +1,37 @@
 import { Expo } from "expo-server-sdk";
+import { database } from "./appwriteConfig.js";
+import { Query } from "appwrite";
+
+async function getTokens() {
+
+    const PAGE_SIZE = 25;
+
+    let allTokens = [];
+    let finalAllTokens = [];
+
+    let offset = 0;
+    let response;
+    do {
+        response = await database.listDocuments(
+            '653ae4b2740b9f0a5139',
+            '65d651f3af4d612b0b75',
+            [Query.limit(PAGE_SIZE), Query.offset(offset)]
+        );
+
+        allTokens = [...allTokens, ...response.documents];
+        offset += PAGE_SIZE;
+    } while (response.documents.length > 0);
+
+    let iterator = 0;
+
+    allTokens.forEach(document => {
+        finalAllTokens[iterator] = document['ExpoPushToken'];
+        iterator++;
+    });
+
+
+    return finalAllTokens;
+}
 
 // Function to send push notification using Expo's API
 async function sendPushNotification(expoPushTokens, notifTitle, notifBody) {
@@ -44,9 +77,9 @@ async function sendPushNotification(expoPushTokens, notifTitle, notifBody) {
 export default async function main({ req, res }) {
 
 
-    const expoPushTokens = req.headers.expoPushTokens;
     const title = req.headers.title;
     const body = req.headers.body;
+    const expoPushTokens = await getTokens();
 
     try {
         const result = await sendPushNotification(expoPushTokens, title, body);
