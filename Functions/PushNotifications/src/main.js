@@ -83,9 +83,9 @@ export default async function main({ req, res }) {
 
     try {
         const result = await sendPushNotification(expoPushTokens, title, body);
-        res.send({ success: true });
+        return res.json({ success: true });
     } catch (error) {
         console.error('Error sending push notification:', error);
-        res.send({ success: false });
+        return res.send({ success: false });
     }
 }
