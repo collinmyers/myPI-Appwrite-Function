@@ -5,8 +5,7 @@ const client = new Client();
 
 client
   .setEndpoint("https://mypi.bd.psu.edu/v1")
-  .setProject("653a90dd1993aebe707f")
-  ;
+  .setProject("653a90dd1993aebe707f");
 const database = new Databases(client);
 
 
@@ -58,7 +57,7 @@ async function deletePOIs(Aliases) {
     response = await database.listDocuments(
       '653ae4b2740b9f0a5139',
       '65565099921adc2d835b',
-      [Query.limit(PAGE_SIZE), Query.offset(offset), Query.contains("Name", [Aliases])]
+      [Query.limit(PAGE_SIZE), Query.offset(offset), Query.contains("Name", Aliases)]
     );
 
     allFoodPOIs = [...allFoodPOIs, ...response.documents];
@@ -75,7 +74,9 @@ async function deletePOIs(Aliases) {
   });
 
 
-  for (i = 0; i < PoiIDs.length(); ++i) {
+
+
+  for (let i = 0; i < PoiIDs.length; ++i) {
     try {
       response = await database.deleteDocument(
         '653ae4b2740b9f0a5139',
