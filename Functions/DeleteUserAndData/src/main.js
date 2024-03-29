@@ -1,87 +1,109 @@
-import { Account, Client, Databases, Query } from "node-appwrite";
+import { Account, Client, Databases, Query, Users } from "node-appwrite";
+import "dotenv/config";
 
-const client = new Client();
-
-client
-  .setEndpoint("https://mypi.bd.psu.edu/v1") // Your API Endpoint
-  .setProject("653a90dd1993aebe707f") // Your project ID
-  .setKey("f5b4297a913e131ba4a11344b1047c08d7e7ba02dc91ff0c0ae7828e0c9d4143080e3fd7c60674abf0b78d6bdbb4cd214eaa9e2a6084030080387e9a358d14f8bbb61eda2922792c222d444ba7d458f32b7cc6758a07b2c195d01ee132236262255a02121d7e2ff189041065e0cf652e9c327dae3f8ba5c798ded51177578da1")
-  .setSession('')
-  ;
-const databases = new Databases(client);
-const account = new Account(client);
-
-const getUserNotificationDocuments = async (userID) => {
+const getUserNotificationDocuments = async (databases, userID) => {
   try {
     const result = await databases.listDocuments(
-      "653ae4b2740b9f0a5139", // databaseId
-      "65d651f3af4d612b0b75", // collectionId
-      [Query.equal("UID", [userID])] // queries (optional)
+      "653ae4b2740b9f0a5139", // Database ID
+      "65d651f3af4d612b0b75", // Push Notifications Collections ID
+      [Query.equal("UID", [userID])]
     );
     return result;
   } catch (err) {
-    console.error(err);
+    return err;
   }
 }
 
-const DeleteUserNotificationDocuments = async (userDocuments) => {
+const DeleteUserNotificationDocuments = async (databases, userDocuments) => {
   try {
     const deletePromises = userDocuments.documents.map(async doc => {
       await databases.deleteDocument(
-        "653ae4b2740b9f0a5139", // databaseId
-        "65d651f3af4d612b0b75", // collectionId
-        doc.$id // documentId
+        "653ae4b2740b9f0a5139", // Database ID
+        "65d651f3af4d612b0b75", // Push Notifications Collections ID
+        doc.$id
       );
-      console.log(`Document ${doc.$id} deleted`);
     });
     await Promise.all(deletePromises);
+    return deletePromises;
   } catch (err) {
-    console.error(err)
+    return err;
   }
 }
 
-const deleteAccount = async (userID) => {
-  const account = new Account(client);
+const deleteLabels = async (users, userID) => {
   try {
-    const result = await account.deleteIdentity(
-      userID // identityId
-    );
+    const response = await users.updateLabels(userID, []);
+    return response;
   } catch (err) {
-    console.error(err);
+    return err;
   }
-}
-
-export default async function main() {
-  const userID = req.headers.id;
-  const providedSessionID = req.header.sid;
-
-
-  const result = await account.getSession(providedSessionID);
-  console.log("HI: ", result)
-
-  // Authorization
-  if (userID !== currentUserID) {
-    return res.status(403).json({ error: 'Unauthorized' });
-  }
-
-  // Input Validation (assuming `userID` should be alphanumeric)
-  if (!/^[a-zA-Z0-9]+$/.test(userID)) {
-    return res.status(400).json({ error: 'Invalid user ID' });
-  }
-
-  try {
-    const userDocuments = await getUserNotificationDocuments(userID);
-
-    const deleteUserDocuments = await DeleteUserNotificationDocuments(userDocuments);
-
-    const deleteUser = await deleteAccount(userID);
-  } catch (err) {
-    console.error("Error during account deletion:", err);
-    // Consider logging to a file or alerting system
-    return res.status(500).json({ error: 'Internal server error' });
-  }
-
 };
 
-main();
+const deleteUser = async (users, userID) => {
+  try {
+    const result = await users.delete(
+      userID
+    );
+    return result;
+  } catch (err) {
+    return err;
+  }
+}
 
+const validateUser = async (JWT, userID) => {
+  try {
+    const client = new Client();
+    client
+      .setEndpoint("https://mypi.bd.psu.edu/v1") //Appwrite Endpoint
+      .setProject("653a90dd1993aebe707f") // Appwrite Project ID
+      .setJWT(JWT)
+      ;
+    const account = new Account(client);
+    const getAccountInfo = await account.get();
+    if (getAccountInfo.$id === userID) {
+      return true;
+    } else {
+      return "User ID provided does not match ID in JWT";
+    }
+  } catch (err) {
+    return err;
+  }
+}
+
+export default async function main({ req, res, log, error }) {
+
+  const JWT = req.headers["x-appwrite-user-jwt"];
+  const userID = req.headers["x-appwrite-user-id"];
+
+  try {
+    const isUser = await validateUser(JWT, userID);
+
+    if (isUser !== true) {
+      error("Error:");
+      error(isUser);
+      return res.send("Not Authorized", 403);
+    } else {
+      const server = new Client();
+      server
+        .setEndpoint("https://mypi.bd.psu.edu/v1") // Appwrite Endpoint
+        .setProject("653a90dd1993aebe707f") // Appwrite Project ID
+        .setKey("bc4b4d88ab4f9ce020a6be2dee0106daec1a528e98eeac08b67a30057dc51d57e49bd6410181a73a48cde931f89308cc023fef151a22e7e1fdafbee958d10c7b5561c69fd3cac780933eb7f6582a4e20661fbc8c305d6398df1beeac7bbdc2c06d546717b5e248f91a2116de3ce12e3f317531b0e7693159a4288ef142bce19e") // Serverside API Key
+        ;
+
+      const serverDatabases = new Databases(server);
+      const serverUsers = new Users(server);
+
+      const userDocuments = await getUserNotificationDocuments(serverDatabases, userID);
+
+      await DeleteUserNotificationDocuments(serverDatabases, userDocuments);
+
+      await deleteLabels(serverUsers, userID);
+
+      await deleteUser(serverUsers, userID);
+    }
+  } catch (err) {
+    error("Error during account deletion:", err);
+    return res.json({ success: false });
+  }
+  return res.json({ success: true });
+};
