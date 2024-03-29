@@ -5,7 +5,9 @@ const client = new Client();
 
 client
   .setEndpoint("https://mypi.bd.psu.edu/v1")
-  .setProject("653a90dd1993aebe707f");
+  .setProject("653a90dd1993aebe707f")
+  .setKey("b1ed4f82ba15e2e718fd41c03e7a3c686785b28edc0ba2e96a867d7272192cdd97c4d5c839012e03f860e6dbab9c21a46211730c95871440b2dfd85aa548aec21d5b24e390ebcff12eef05fcaab7ac2c395aa57b55432565185c846c8319ac3798e7c864a9a951721229b7537dfdd434fe5983cc6b5be718eaefd965440936ee")
+  ;
 const database = new Databases(client);
 
 
