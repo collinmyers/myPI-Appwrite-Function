@@ -3,9 +3,28 @@ import { Client, Users, Account } from 'node-appwrite';
 const updateUser = async (name, email, labels, userID, serverUsers) => {
 
   try {
-    await serverUsers.updateName(userID, name);
-    await serverUsers.updateEmail(userID, email);
-    await serverUsers.updateLabels(userID, labels);
+    const accountInfo = await serverUsers.get(userID);
+
+
+    if (accountInfo.name != name) {
+      await serverUsers.updateName(userID, name);
+
+    }
+
+    if (accountInfo.email != email) {
+      await serverUsers.updateEmail(userID, email);
+
+    }
+
+    for (let index = 0; index < array.length; index++) {
+      const element = array[index];
+
+    }
+
+    if (JSON.stringify(accountInfo.labels) == JSON.stringify(labels)) {
+      await serverUsers.updateLabels(userID, labels);
+    }
+
   } catch (err) {
     return err;
   }
@@ -38,9 +57,11 @@ export default async function main({ req, res, log, error }) {
   const JWT = req.headers["x-appwrite-user-jwt"];
   const callingUserID = req.headers["x-appwrite-user-id"];
 
+  const body = JSON.parse(req.body);
+
   const name = req.headers.name;
   const email = req.headers.email;
-  const labels = req.headers.labels;
+  const labels = body.labels;
   const targetUserID = req.headers.targetuserid;
 
   if (req.method === 'PATCH') {
@@ -60,8 +81,7 @@ export default async function main({ req, res, log, error }) {
           .setKey("dfec38a5697f030cb29b326929e98113ec72cac460b91bbbf5ad66d74d73bdc3f3bd47c7de04c11c7464b55af3254f9b8f7f5add0d7bcded703a93a8395c623709051320e6d3e8d09d2137d00868833e7408bb1778339088a812f80390ecfd3389e0ea291178a307f50763961f59664314eaeca5c268e840dee7cb7c2a0dc5c3") // Your secret API key
           ;
         const serverUsers = new Users(server);
-        const user = await updateUser(name, email, labels, targetUserID, serverUsers);
-        log(user);
+        await updateUser(name, email, labels, targetUserID, serverUsers);
 
       }
 
