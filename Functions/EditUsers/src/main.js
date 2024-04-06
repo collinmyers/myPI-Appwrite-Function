@@ -16,14 +16,8 @@ const updateUser = async (name, email, labels, userID, serverUsers) => {
 
     }
 
-    for (let index = 0; index < array.length; index++) {
-      const element = array[index];
+    await serverUsers.updateLabels(userID, labels);
 
-    }
-
-    if (JSON.stringify(accountInfo.labels) == JSON.stringify(labels)) {
-      await serverUsers.updateLabels(userID, labels);
-    }
 
   } catch (err) {
     return err;
@@ -63,6 +57,8 @@ export default async function main({ req, res, log, error }) {
   const email = req.headers.email;
   const labels = body.labels;
   const targetUserID = req.headers.targetuserid;
+
+  log(labels)
 
   if (req.method === 'PATCH') {
 
