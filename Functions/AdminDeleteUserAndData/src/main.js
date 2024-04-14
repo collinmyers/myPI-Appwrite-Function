@@ -73,7 +73,7 @@ export default async function main({ req, res, log, error }) {
 
   const JWT = req.headers["x-appwrite-user-jwt"];
   const userID = req.headers["x-appwrite-user-id"];
-  const targetUser = req.header["target-user"];
+  const targetUser = req.headers["target-user"];
 
   try {
     const isUser = await validateUser(JWT, userID);
