@@ -103,5 +103,3 @@ export default async function main({ req, res, log, error }) {
   }
   return res.json({ success: true });
 };
-
-main();
