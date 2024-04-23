@@ -1,14 +1,33 @@
-import { Account, Client, Users } from "node-appwrite";
+import { Account, Client, Query, Users } from "node-appwrite";
 
 const getEmailUsers = async (server) => {
+  const PAGE_SIZE = 100;
+  let offset = 0;
   const users = new Users(server);
-  const response = await users.list();
-  const usersList = response.users;
+
+  let usersList = [];
+  const response = await users.list([Query.limit(PAGE_SIZE), Query.offset(offset)]);
+  const numberOfUsers = response.total;
+  const firstSetOfUsers = response.users;
+
+  usersList = usersList.concat(firstSetOfUsers);
+
+  let usersSoFar = response.users.length;
+  offset += usersSoFar;
+
+  while (usersSoFar < numberOfUsers) {
+    const loopResponse = await users.list([Query.limit(PAGE_SIZE), Query.offset(offset)]);
+    const currentSetOfUsers = loopResponse.users;
+    usersList = usersList.concat(currentSetOfUsers);
+    offset += loopResponse.users.length;
+    usersSoFar += loopResponse.users.length;
+  }
   const authenticatedUsers = usersList.filter(user => user.email !== "");
   return authenticatedUsers;
 }
-const filterUserInfo = async (authenticatedUsers) => {
-  return authenticatedUsers.map(({ $id, name, email, labels }) => ({ $id, name, email, labels }));
+
+const filterUserInfo = (authenticatedUsers) => {
+  return authenticatedUsers.map(({ $id, name, email, labels }) => ({ $id, name, email, labels }))
 }
 const validateUser = async (JWT, userID) => {
   try {
@@ -29,7 +48,6 @@ const validateUser = async (JWT, userID) => {
     return err;
   }
 }
-
 
 export default async function main({ req, res, log, error }) {
   const JWT = req.headers["x-appwrite-user-jwt"];
@@ -52,14 +70,16 @@ export default async function main({ req, res, log, error }) {
         ;
 
       const authenticatedUsers = await getEmailUsers(server);
-      const userInfo = await filterUserInfo(authenticatedUsers);
+      const userInfo = filterUserInfo(authenticatedUsers);
+      console.log(userInfo.length);
 
       if (req.method === "GET") {
         return res.json({ userInfo });
       }
 
     }
-  } catch (err) {
+  } catch (error) {
+    console.error(error)
     error("Error during account retrieval:", err);
     return res.json({ success: false });
   }
