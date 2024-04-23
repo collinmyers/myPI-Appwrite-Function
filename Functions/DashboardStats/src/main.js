@@ -1,12 +1,13 @@
-import { Account, Client, Databases, Users } from 'node-appwrite';
+import { Client, Databases, Query, Users } from 'node-appwrite';
 
 const getUserStats = async (server) => {
   try {
     const users = new Users(server);
     const response = await users.list();
-    const usersList = response.users;
-    const authenticatedUsers = usersList.filter(user => user.email !== "");
-    return [usersList.length, authenticatedUsers.length];
+    const totalUsers = response.total;
+    const authResponse = await users.list([Query.notEqual("name", [""]), Query.notEqual("email", [""])]);
+    const authenticatedUsers = authResponse.total;
+    return [totalUsers, authenticatedUsers];
   } catch (error) {
     return error;
   }
@@ -102,3 +103,5 @@ export default async function main({ req, res, log, error }) {
   }
   return res.json({ success: true });
 };
+
+main();
