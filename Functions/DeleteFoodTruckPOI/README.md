@@ -1,46 +1,6 @@
-# DeleteFoodTruckPOI
-
-## 🧰 Usage
-
-### GET /
-
-- Returns a "Hello, World!" message.
-
-**Response**
-
-Sample `200` Response:
-
-```text
-Hello, World!
-```
-
-### POST, PUT, PATCH, DELETE /
-
-- Returns a "Learn More" JSON response.
-
-**Response**
-
-Sample `200` Response:
-
-```json
-{
-  "motto": "Build like a team of hundreds_",
-  "learn": "https://appwrite.io/docs",
-  "connect": "https://appwrite.io/discord",
-  "getInspired": "https://builtwith.appwrite.io"
-}
-```
-
-## ⚙️ Configuration
-
-| Setting           | Value         |
-|-------------------|---------------|
-| Runtime           | Node (20.0)   |
-| Entrypoint        | `src/main.js` |
-| Build Commands    | `npm install` |
-| Permissions       | `any`         |
-| Timeout (Seconds) | 15            |
-
-## 🔒 Environment Variables
-
-No environment variables required.
+## Important Notes
+1. Due to the nature of these edge functions you must add your own hardcoded values used here, as the backend cannot use env packages
+2. Where you need to add information to the file you will see **<your-info-here>**
+3. This edge function runs on the cron expression of `0 1 * * *` to execute at 9:00PM every night, the backend uses UTC time not local time
+4. This edge function needs an API key with the following permissions: 
+      Database : database.read, collections.read, attributes.read, indexes.read, documents.read, documents.write

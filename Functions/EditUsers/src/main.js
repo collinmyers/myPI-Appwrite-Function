@@ -30,8 +30,8 @@ const validateUser = async (JWT, userID) => {
   try {
     const client = new Client();
     client
-      .setEndpoint("https://mypi.bd.psu.edu/v1") //Appwrite Endpoint
-      .setProject("653a90dd1993aebe707f") // Appwrite Project ID
+      .setEndpoint("<your-info-here>") //Appwrite Endpoint
+      .setProject("<your-info-here>") // Appwrite Project ID
       .setJWT(JWT)
       ;
     const account = new Account(client);
@@ -72,9 +72,9 @@ export default async function main({ req, res, log, error }) {
       } else {
         const server = new Client();
         server
-          .setEndpoint("https://mypi.bd.psu.edu/v1") // Your API Endpoint
-          .setProject("653a90dd1993aebe707f") // Your project ID
-          .setKey("dfec38a5697f030cb29b326929e98113ec72cac460b91bbbf5ad66d74d73bdc3f3bd47c7de04c11c7464b55af3254f9b8f7f5add0d7bcded703a93a8395c623709051320e6d3e8d09d2137d00868833e7408bb1778339088a812f80390ecfd3389e0ea291178a307f50763961f59664314eaeca5c268e840dee7cb7c2a0dc5c3") // Your secret API key
+          .setEndpoint("<your-info-here>") // Your API Endpoint
+          .setProject("<your-info-here>") // Your project ID
+          .setKey("<your-info-here>") // Your secret API key
           ;
         const serverUsers = new Users(server);
         await updateUser(name, email, labels, targetUserID, serverUsers);

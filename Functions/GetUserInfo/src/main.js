@@ -1,4 +1,4 @@
-import { Account, Client, Query, Users } from "node-appwrite";
+import { Client, Query, Users } from "node-appwrite";
 
 const getEmailUsers = async (server) => {
   const PAGE_SIZE = 100;
@@ -29,9 +29,9 @@ export default async function main({ req, res, log, error }) {
   try {
     const server = new Client();
     server
-      .setEndpoint("https://mypi.bd.psu.edu/v1") // Your API Endpoint
-      .setProject("653a90dd1993aebe707f") // Your project ID
-      .setKey("b1259e652349c7f220aed6aa75b3f1f157c2aa58b224488525757ce3e7496791d69b77b80ce9903db94ddb7fcc75eff978fe8ef5f884cc2c60c33df62f9dafb7ce2c9d5b6095dcddeb42fff0e8455a6f077e7993f3fabb324e899b9221e238fcd5f51ef9dad5320202d129b44ea5eb145d4cd53db2ed3721f9f4a0cd990960e4") // Your secret API key
+      .setEndpoint("<your-info-here>") // Your API Endpoint
+      .setProject("<your-info-here>") // Your project ID
+      .setKey("<your-info-here>") // Your secret API key
       ;
 
     const allUsers = await getEmailUsers(server);

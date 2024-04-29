@@ -16,8 +16,8 @@ const getUserStats = async (server) => {
 const getTotalEvents = async (database) => {
   try {
     const documents = await database.listDocuments(
-      "653ae4b2740b9f0a5139", // Database ID
-      "655280f07e30eb37c8e8", // Events Collection ID
+      "<your-info-here>", // Database ID
+      "<your-info-here>", // Events Collection ID
       [] // queries (optional)
     );
     return documents.total;
@@ -29,8 +29,8 @@ const getTotalEvents = async (database) => {
 const getTotalPoints = async (database) => {
   try {
     const documents = await database.listDocuments(
-      "653ae4b2740b9f0a5139", // Database ID
-      "65565099921adc2d835b", // Points of Interest Collection ID
+      "<your-info-here>", // Database ID
+      "<your-info-here>", // Points of Interest Collection ID
       [] // queries (optional)
     );
     return documents.total;
@@ -42,8 +42,8 @@ const getTotalPoints = async (database) => {
 const getTotalNotifications = async (database) => {
   try {
     const documents = await database.listDocuments(
-      "653ae4b2740b9f0a5139", // Database ID
-      "6552848655e88d169d7d", // Notifications Collection ID
+      "<your-info-here>", // Database ID
+      "<your-info-here>", // Notifications Collection ID
       [] // queries (optional)
     );
     return documents.total;
@@ -55,9 +55,9 @@ const getTotalNotifications = async (database) => {
 const updateStats = async (database, totalUsers, registedUsers, totalEvents, totalPoints, totalNotifications) => {
   try {
     return await database.updateDocument(
-      "653ae4b2740b9f0a5139", // Database ID
-      "6615e856000645282f59", // Dashboard Stats Collection ID
-      "6615ea7b00122f0676dc", // Document ID
+      "<your-info-here>", // Database ID
+      "<your-info-here>", // Dashboard Stats Collection ID
+      "<your-info-here>", // Document ID
       {
         "TotalUsers": totalUsers,
         "RegisteredUsers": registedUsers,
@@ -77,9 +77,9 @@ export default async function main({ req, res, log, error }) {
     const server = new Client();
 
     server
-      .setEndpoint("https://mypi.bd.psu.edu/v1") // Your API Endpoint
-      .setProject("653a90dd1993aebe707f") // Your project ID
-      .setKey("53df142f37437c58a518bf518af6019334a51d384d040b604ee94ecea0c554a83abbf19bb10176fb7e28b7445f74dbc6d003d7e2dec09f4ba4b31926c84b6eaeac4bfb68cb82b4b748817040ca8b8bdb770f3d65368f5a716a5f84fdbd22b635b7c865f3caaff5abe16c71958b2ce0770c0e2596b6f2ae9af647064b89a9729c") // Your secret API key
+      .setEndpoint("<your-info-here>") // Your API Endpoint
+      .setProject("<your-info-here>") // Your project ID
+      .setKey("<your-info-here>") // Your secret API key
       ;
 
     const database = new Databases(server);

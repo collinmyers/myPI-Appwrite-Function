@@ -3,8 +3,8 @@ import { Account, Client, Databases, Query, Users } from "node-appwrite";
 const getUserNotificationDocuments = async (databases, targetUser) => {
   try {
     const result = await databases.listDocuments(
-      "653ae4b2740b9f0a5139", // Database ID
-      "65d651f3af4d612b0b75", // Push Notifications Collections ID
+      "<your-info-here>", // Database ID
+      "<your-info-here>", // Push Notifications Collections ID
       [Query.equal("UID", [targetUser])]
     );
     return result;
@@ -17,8 +17,8 @@ const DeleteUserNotificationDocuments = async (databases, userDocuments) => {
   try {
     const deletePromises = userDocuments.documents.map(async doc => {
       await databases.deleteDocument(
-        "653ae4b2740b9f0a5139", // Database ID
-        "65d651f3af4d612b0b75", // Push Notifications Collections ID
+        "<your-info-here>", // Database ID
+        "<your-info-here>", // Push Notifications Collections ID
         doc.$id
       );
     });
@@ -53,8 +53,8 @@ const validateUser = async (JWT, targetUser) => {
   try {
     const client = new Client();
     client
-      .setEndpoint("https://mypi.bd.psu.edu/v1") //Appwrite Endpoint
-      .setProject("653a90dd1993aebe707f") // Appwrite Project ID
+      .setEndpoint("<your-info-here>") //Appwrite Endpoint
+      .setProject("<your-info-here>") // Appwrite Project ID
       .setJWT(JWT)
       ;
     const account = new Account(client);
@@ -85,9 +85,9 @@ export default async function main({ req, res, log, error }) {
     } else {
       const server = new Client();
       server
-        .setEndpoint("https://mypi.bd.psu.edu/v1") // Appwrite Endpoint
-        .setProject("653a90dd1993aebe707f") // Appwrite Project ID
-        .setKey("bc4b4d88ab4f9ce020a6be2dee0106daec1a528e98eeac08b67a30057dc51d57e49bd6410181a73a48cde931f89308cc023fef151a22e7e1fdafbee958d10c7b5561c69fd3cac780933eb7f6582a4e20661fbc8c305d6398df1beeac7bbdc2c06d546717b5e248f91a2116de3ce12e3f317531b0e7693159a4288ef142bce19e") // Serverside API Key
+        .setEndpoint("<your-info-here>") // Appwrite Endpoint
+        .setProject("<your-info-here>") // Appwrite Project ID
+        .setKey("<your-info-here>") // Serverside API Key
         ;
 
       const serverDatabases = new Databases(server);

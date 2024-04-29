@@ -1,46 +1,6 @@
-# GetUserInfo
-
-## 🧰 Usage
-
-### GET /
-
-- Returns a "Hello, World!" message.
-
-**Response**
-
-Sample `200` Response:
-
-```text
-Hello, World!
-```
-
-### POST, PUT, PATCH, DELETE /
-
-- Returns a "Learn More" JSON response.
-
-**Response**
-
-Sample `200` Response:
-
-```json
-{
-  "motto": "Build like a team of hundreds_",
-  "learn": "https://appwrite.io/docs",
-  "connect": "https://appwrite.io/discord",
-  "getInspired": "https://builtwith.appwrite.io"
-}
-```
-
-## ⚙️ Configuration
-
-| Setting           | Value         |
-|-------------------|---------------|
-| Runtime           | Node (20.0)   |
-| Entrypoint        | `src/main.js` |
-| Build Commands    | `npm install` |
-| Permissions       | `any`         |
-| Timeout (Seconds) | 15            |
-
-## 🔒 Environment Variables
-
-No environment variables required.
+## Important Notes
+1. Due to the nature of these edge functions you must add your own hardcoded values used here, as the backend cannot use env packages
+2. Where you need to add information to the file you will see **<your-info-here>**
+3. The execution permission that should be added to this edge function is "ManageUsers"
+4. This edge function needs an API key with the following permissions: 
+      Auth: users.read

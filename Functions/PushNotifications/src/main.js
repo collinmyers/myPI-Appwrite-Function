@@ -13,8 +13,8 @@ async function getTokens() {
     try {
         do {
             response = await database.listDocuments(
-                '653ae4b2740b9f0a5139',
-                '65d651f3af4d612b0b75',
+                '<your-info-here>', // Database ID
+                '<your-info-here>', // User Notification Tokens Collection ID
                 [Query.limit(PAGE_SIZE), Query.offset(offset)]
             );
 

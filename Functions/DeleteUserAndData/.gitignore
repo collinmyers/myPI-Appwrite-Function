@@ -130,4 +130,3 @@ dist
 .pnp.*
 
 *.prettierrc.json*
-*README.md*
