@@ -1,2 +1,2 @@
 ## Appwrite Edge Functions
-This is where all edge functions for the mobile app and dashboard will exist, additional README's will be in each directory that will provide more detail and instructions for them.
+This is where all edge functions for the mobile app and dashboard will exist, additional README's will be in each directory that will provide more detail and instructions for them. For the appwrite.json please add your own info where you see  **<your-info-here>**, after you have updated your info, make sure to add it to the gitignore if you plan to have this on a remote repo.

@@ -1,0 +1,132 @@
+{
+    "projectId": "<your-info-here>",
+    "projectName": "<your-info-here>",
+    "functions": [
+        {
+            "$id": "<your-info-here>",
+            "name": "AdminDeleteUserAndData",
+            "runtime": "node-20.0",
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "functions/AdminDeleteUserAndData"
+        },
+        {
+            "$id": "<your-info-here>",
+            "name": "DashboardStats",
+            "runtime": "node-20.0",
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "functions/DashboardStats"
+        },
+        {
+            "$id": "<your-info-here>",
+            "name": "DeleteFoodTruckPOI",
+            "runtime": "node-20.0",
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "functions/DeleteFoodTruckPOI"
+        },
+        {
+            "$id": "<your-info-here>",
+            "name": "DeleteUserAndData",
+            "runtime": "node-20.0",
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "functions/DeleteUserAndData"
+        },
+        {
+            "$id": "<your-info-here>",
+            "name": "EditUsers",
+            "runtime": "node-20.0",
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "functions/EditUsers"
+        },
+        {
+            "$id": "<your-info-here>",
+            "name": "GetUserInfo",
+            "runtime": "node-20.0",
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "functions/GetUserInfo"
+        },
+        {
+            "$id": "<your-info-here>",
+            "name": "PushNotifications",
+            "runtime": "node-20.0",
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 900,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "functions/PushNotifications"
+        }
+    ]
+}
